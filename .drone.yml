@@ -1,0 +1,24 @@
+kind: pipeline
+name: default
+
+clone:
+  depth: 5
+
+steps:
+- name: build go
+  image: golang:1.11
+  commands:
+  - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -a -tags netgo -o release/linux/amd64/drone-git-with-ssh
+
+- name: test with docker
+  image: docker
+  environment:
+    SSH_KEY:
+      from_secret: deploy_key
+  commands:
+  - docker build --rm -t matsubara0507/git-with-ssh .
+  - docker run --rm -e PLUGIN_SSH_PRIVATE_KEY=$SSH_KEY -e PLUGIN_SSH_HOSTS=github.com -e PLUGIN_COMMANDS='git clone git@github.com:matsubara0507/drone-git-with-ssh.git' -v $(pwd):/root/work -w /root/work matsubara0507/git-with-ssh
+  when:
+    event:
+      exclude:
+        - pull_request
