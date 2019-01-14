@@ -10,14 +10,14 @@ steps:
   commands:
   - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -a -tags netgo -o release/linux/amd64/drone-git-with-ssh
 
-- name: test with docker
-  image: docker
-  environment:
-    SSH_KEY:
-      from_secret: deploy_key
-  commands:
-  - docker build --rm -t matsubara0507/git-with-ssh .
-  - docker run --rm -e PLUGIN_SSH_PRIVATE_KEY=$SSH_KEY -e PLUGIN_SSH_HOSTS=github.com -e PLUGIN_COMMANDS='git clone git@github.com:matsubara0507/drone-git-with-ssh.git' -v $(pwd):/root/work -w /root/work matsubara0507/git-with-ssh
+- name: build docker image (dry_run)
+  image: plugins/docker
+  settings:
+    username: matsubara0507
+    password:
+      from_secret: docker_hub_password
+    repo: matsubara0507/git-with-ssh
+    dry-run: true
   when:
     event:
       exclude:
