@@ -33,6 +33,12 @@ func main() {
 			Usage:  "shell commands",
 			EnvVar: "PLUGIN_COMMANDS",
 		},
+		cli.StringFlag{
+			Name:   "home",
+			Usage:  "home directory for ssh",
+			EnvVar: "PLUGIN_HOME",
+			Value:  "/root",
+		},
 
 		cli.StringFlag{
 			Name:  "env-file",
@@ -51,7 +57,7 @@ func run(c *cli.Context) error {
 	}
 
 	plugin := Plugin{
-		Home:     "/root",
+		Home:     c.String("home"),
 		SSHKey:   c.String("ssh-private-key"),
 		Hosts:    c.StringSlice("hosts"),
 		Commands: c.StringSlice("commands"),
