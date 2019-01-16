@@ -35,11 +35,12 @@ func (p Plugin) Exec() error {
 	log.Infof("Write file: %s/config", sshDir)
 
 	for _, command := range p.Commands {
+		log.Infof("Exec cmd: %s:", command)
 		out, err := exec.Command("/bin/sh", "-c", command).CombinedOutput()
 		if err != nil {
-			return errors.Wrapf(err, "Exec cmd: %s: %s", command, out)
+			return errors.Wrapf(err, "Exec cmd: %s: %s", command, string(out))
 		}
-		log.Infof("Exec cmd: %s:  %s", command, string(out))
+		log.Infof("output: %s", string(out))
 	}
 
 	return nil
