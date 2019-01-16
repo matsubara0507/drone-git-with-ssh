@@ -17,7 +17,7 @@ type Plugin struct {
 	Commands []string
 }
 
-func (p Plugin) Exec() (err error) {
+func (p Plugin) Exec() error {
 	sshDir := fmt.Sprintf("%s/.ssh", p.Home)
 	if err := os.MkdirAll(sshDir, 0700); err != nil {
 		return errors.Wrapf(err, "Exec cmd: mkdir -p %s", sshDir)
@@ -29,6 +29,23 @@ func (p Plugin) Exec() (err error) {
 	}
 	log.Infof("Write file: %s/id_rsa", sshDir)
 
+	if err := p.writeSSHConfigFile(sshDir); err != nil {
+		return err
+	}
+	log.Infof("Write file: %s/config", sshDir)
+
+	for _, command := range p.Commands {
+		out, err := exec.Command("/bin/sh", "-c", command).CombinedOutput()
+		if err != nil {
+			return errors.Wrapf(err, "Exec cmd: %s: %s", command, out)
+		}
+		log.Infof("Exec cmd: %s:  %s", command, string(out))
+	}
+
+	return nil
+}
+
+func (p Plugin) writeSSHConfigFile(sshDir string) (err error) {
 	sshConfigFile, err := os.OpenFile(fmt.Sprintf("%s/config", sshDir), os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
 		return errors.Wrapf(err, "Open file: %s/config", sshDir)
@@ -45,15 +62,5 @@ func (p Plugin) Exec() (err error) {
 			return errors.Wrapf(err, "Write file: %s/config (host: %s)", sshDir, host)
 		}
 	}
-	log.Infof("Write file: %s/config", sshDir)
-
-	for _, command := range p.Commands {
-		out, err := exec.Command("/bin/sh", "-c", command).CombinedOutput()
-		if err != nil {
-			return errors.Wrapf(err, "Exec cmd: %s: %s", command, out)
-		}
-		log.Infof("Exec cmd: %s: %s", command, string(out))
-	}
-
-	return err
+	return nil
 }
