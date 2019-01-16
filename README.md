@@ -17,6 +17,30 @@ go build
 
 ## Docker
 
+```
+$ ./drone-git-with-ssh --help
+NAME:
+   git-with-ssh plugin - git-with-ssh plugin
+
+USAGE:
+   drone-git-with-ssh [global options] command [command options] [arguments...]
+
+VERSION:
+   1.0.0+0
+
+COMMANDS:
+     help, h  Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   --ssh-private-key value  SSH private key for git [$PLUGIN_SSH_PRIVATE_KEY]
+   --hosts value            hosts by git with ssh (disable StrictHostKeyChecking) [$PLUGIN_SSH_HOSTS]
+   --commands value         shell commands [$PLUGIN_COMMANDS]
+   --home value             home directory for ssh (default: "/root") [$PLUGIN_HOME]
+   --env-file value         source env file
+   --help, -h               show help
+   --version, -v            print the version
+```
+
 Build the Docker image with the following commands:
 
 ```
