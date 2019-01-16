@@ -30,9 +30,9 @@ func main() {
 			EnvVar: "PLUGIN_SSH_HOSTS",
 		},
 		cli.StringSliceFlag{
-			Name:   "script",
+			Name:   "commands",
 			Usage:  "shell commands",
-			EnvVar: "PLUGIN_SCRIPT",
+			EnvVar: "PLUGIN_COMMANDS",
 		},
 		cli.StringFlag{
 			Name:   "home",
@@ -61,7 +61,7 @@ func run(c *cli.Context) error {
 		Home:     c.String("home"),
 		SSHKey:   strings.Replace(c.String("ssh_private_key"), `\n`, "\n", -1),
 		Hosts:    c.StringSlice("ssh_hosts"),
-		Commands: c.StringSlice("script"),
+		Commands: c.StringSlice("commands"),
 	}
 
 	return plugin.Exec()
