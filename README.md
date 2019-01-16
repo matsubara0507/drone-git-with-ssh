@@ -1,4 +1,10 @@
 # drone-git-with-ssh
+
+[![Build Status](https://cloud.drone.io/api/badges/matsubara0507/drone-git-with-ssh/status.svg)](https://cloud.drone.io/matsubara0507/drone-git-with-ssh)
+[![GoDoc](https://godoc.org/github.com/matsubara0507/drone-git-with-ssh?status.svg)](https://godoc.org/github.com/matsubara0507/drone-git-with-ssh)
+[![Go Report Card](https://goreportcard.com/badge/github.com/matsubara0507/drone-git-with-ssh)](https://goreportcard.com/report/github.com/matsubara0507/drone-git-with-ssh)
+[![](https://images.microbadger.com/badges/image/matsubara0507/git-with-ssh.svg)](https://microbadger.com/images/matsubara0507/git-with-ssh "Get your own image badge on microbadger.com")
+
 Drone plugin: git with ssh
 
 ## Build
