@@ -32,3 +32,17 @@ steps:
     event:
       exclude:
         - pull_request
+
+- name: push docker image
+  image: plugins/docker
+  settings:
+    username: matsubara0507
+    password:
+      from_secret: docker_hub_password
+    repo: matsubara0507/git-with-ssh
+  when:
+    branch:
+    - master
+    event:
+      exclude:
+        - pull_request
