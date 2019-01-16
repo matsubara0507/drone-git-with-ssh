@@ -12,3 +12,5 @@
 *.out
 
 drone-git-with-ssh
+test/expected/.ssh/id_rsa
+test/result/.ssh/*
