@@ -51,7 +51,7 @@ COMMANDS:
 GLOBAL OPTIONS:
    --ssh-private-key value  SSH private key for git [$PLUGIN_SSH_PRIVATE_KEY]
    --hosts value            hosts by git with ssh (disable StrictHostKeyChecking) [$PLUGIN_SSH_HOSTS]
-   --commands value         shell commands [$PLUGIN_COMMANDS]
+   --script value           shell commands [$PLUGIN_SCRIPT]
    --home value             home directory for ssh (default: "/root") [$PLUGIN_HOME]
    --env-file value         source env file
    --help, -h               show help
@@ -64,7 +64,7 @@ Execute from the working directory:
 docker run --rm \
   -e PLUGIN_SSH_PRIVATE_KEY=ssh_key \
   -e PLUGIN_SSH_HOSTS=github.com,bitbucket.org \
-  -e PLUGIN_COMMANDS='git clone git@github.com:matsubara0507/drone-git-with-ssh.git' \
+  -e PLUGIN_SCRIPT='git clone git@github.com:matsubara0507/drone-git-with-ssh.git' \
   -v $(pwd):/root/work \
   -w /root/work \
   matsubara0507/git-with-ssh

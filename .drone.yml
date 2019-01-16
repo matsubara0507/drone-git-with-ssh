@@ -17,7 +17,7 @@ steps:
     SSH_KEY: 'aaa\nbbb'
   commands:
   - printf $SSH_KEY > ./test/expected/.ssh/id_rsa && chmod 600 ./test/expected/.ssh/id_rsa
-  - ./drone-git-with-ssh --home ./test/result --ssh-private-key $SSH_KEY --hosts github.com --hosts bitbucket.org --commands 'pwd' --commands 'ls'
+  - ./drone-git-with-ssh --home ./test/result --ssh-private-key $SSH_KEY --hosts github.com --hosts bitbucket.org --script 'pwd' --script 'ls'
   - diff ./test/result/.ssh ./test/expected/.ssh
 
 - name: build docker image (dry_run)
