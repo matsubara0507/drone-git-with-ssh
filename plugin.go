@@ -26,7 +26,7 @@ func (p Plugin) Exec() (err error) {
 		return errors.Wrapf(err, "Write file: %s/id_rsa", sshDir)
 	}
 
-	sshConfigFile, err := os.OpenFile(fmt.Sprintf("%s/config", sshDir), os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
+	sshConfigFile, err := os.OpenFile(fmt.Sprintf("%s/config", sshDir), os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
 		return errors.Wrapf(err, "Open file: %s/config", sshDir)
 	}
