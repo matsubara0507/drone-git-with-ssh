@@ -7,6 +7,7 @@ import (
 	"os/exec"
 
 	"github.com/pkg/errors"
+	log "github.com/sirupsen/logrus"
 )
 
 type Plugin struct {
@@ -21,10 +22,12 @@ func (p Plugin) Exec() (err error) {
 	if err := os.MkdirAll(sshDir, 0700); err != nil {
 		return errors.Wrapf(err, "Exec cmd: mkdir -p %s", sshDir)
 	}
+	log.Infof("Exec cmd: mkdir -p %s", sshDir)
 
 	if err := ioutil.WriteFile(fmt.Sprintf("%s/id_rsa", sshDir), []byte(p.SSHKey), 0600); err != nil {
 		return errors.Wrapf(err, "Write file: %s/id_rsa", sshDir)
 	}
+	log.Infof("Write file: %s/id_rsa", sshDir)
 
 	sshConfigFile, err := os.OpenFile(fmt.Sprintf("%s/config", sshDir), os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
@@ -42,14 +45,14 @@ func (p Plugin) Exec() (err error) {
 			return errors.Wrapf(err, "Write file: %s/config (host: %s)", sshDir, host)
 		}
 	}
+	log.Infof("Write file: %s/config", sshDir)
 
 	for _, command := range p.Commands {
 		out, err := exec.Command("/bin/sh", "-c", command).CombinedOutput()
 		if err != nil {
 			return errors.Wrapf(err, "Exec cmd: %s: %s", command, out)
 		}
-
-		fmt.Println(string(out))
+		log.Infof("Exec cmd: %s: %s", command, string(out))
 	}
 
 	return err
