@@ -20,13 +20,13 @@ func main() {
 	app.Version = fmt.Sprintf("1.0.0+%s", build)
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name:   "ssh-private-key",
+			Name:   "ssh_private_key",
 			Usage:  "SSH private key for git",
 			EnvVar: "PLUGIN_SSH_PRIVATE_KEY",
 		},
 		cli.StringSliceFlag{
-			Name:   "hosts",
-			Usage:  "hosts by git with ssh (disable StrictHostKeyChecking)",
+			Name:   "ssh_hosts",
+			Usage:  "SSH hosts by git with ssh (disable StrictHostKeyChecking)",
 			EnvVar: "PLUGIN_SSH_HOSTS",
 		},
 		cli.StringSliceFlag{
@@ -59,8 +59,8 @@ func run(c *cli.Context) error {
 
 	plugin := Plugin{
 		Home:     c.String("home"),
-		SSHKey:   strings.Replace(c.String("ssh-private-key"), `\n`, "\n", -1),
-		Hosts:    c.StringSlice("hosts"),
+		SSHKey:   strings.Replace(c.String("ssh_private_key"), `\n`, "\n", -1),
+		Hosts:    c.StringSlice("ssh_hosts"),
 		Commands: c.StringSlice("script"),
 	}
 

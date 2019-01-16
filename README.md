@@ -49,8 +49,8 @@ COMMANDS:
      help, h  Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
-   --ssh-private-key value  SSH private key for git [$PLUGIN_SSH_PRIVATE_KEY]
-   --hosts value            hosts by git with ssh (disable StrictHostKeyChecking) [$PLUGIN_SSH_HOSTS]
+   --ssh_private_key value  SSH private key for git [$PLUGIN_SSH_PRIVATE_KEY]
+   --ssh_hosts value        SSH hosts by git with ssh (disable StrictHostKeyChecking) [$PLUGIN_SSH_HOSTS]
    --script value           shell commands [$PLUGIN_SCRIPT]
    --home value             home directory for ssh (default: "/root") [$PLUGIN_HOME]
    --env-file value         source env file
