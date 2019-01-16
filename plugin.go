@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
@@ -35,12 +36,16 @@ func (p Plugin) Exec() error {
 	log.Infof("Write file: %s/config", sshDir)
 
 	for _, command := range p.Commands {
-		log.Infof("Exec cmd: %s:", command)
+		log.Infof("Exec cmd: %s", command)
 		out, err := exec.Command("/bin/sh", "-c", command).CombinedOutput()
 		if err != nil {
 			return errors.Wrapf(err, "Exec cmd: %s: %s", command, string(out))
 		}
-		log.Infof("output: %s", string(out))
+		if len(out) != 0 {
+			for _, line := range strings.Split(string(out), "\n") {
+				log.Infof("output: %s", line)
+			}
+		}
 	}
 
 	return nil
