@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
@@ -58,7 +59,7 @@ func run(c *cli.Context) error {
 
 	plugin := Plugin{
 		Home:     c.String("home"),
-		SSHKey:   c.String("ssh-private-key"),
+		SSHKey:   strings.Replace(c.String("ssh-private-key"), `\n`, "\n", -1),
 		Hosts:    c.StringSlice("hosts"),
 		Commands: c.StringSlice("commands"),
 	}
